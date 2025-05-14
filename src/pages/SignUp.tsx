@@ -1,8 +1,9 @@
 import Checkbox from '../components/CheckBox/CheckBox';
+import SelectMenu from '../components/SelectMenu/SelectMenu';
 import TextField from '../components/TextField/TextField';
 import Title from '../components/Title/Title';
 
-const placeholders = ["Ім'я", 'Прізвище', 'Мейл', 'Пароль'];
+const placeholders = ["Ім'я", 'Прізвище', 'Логін'];
 
 function SignUp() {
   return (
@@ -15,6 +16,7 @@ function SignUp() {
         {placeholders.map((el, i) => {
           return <TextField key={i} placeholder={el} />;
         })}
+        <SelectMenu />
         <Checkbox discription="Ви являєтесь студентом?" />
         <button
           className="hover:bg-[#40414F]  px-4 py-3 rounded-md outline-none cursor-pointer w-full border"
