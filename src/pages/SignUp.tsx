@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import TextField from '../components/TextField/TextField';
 import Title from '../components/Title/Title';
-import Checkbox from '../components/CheckBox/CheckBox';
+import { FcGoogle } from 'react-icons/fc';
 import { setUser } from '../store/slices/userSlice';
 import { useNavigate } from 'react-router';
+import { auth } from '../firebase';
+import useGoogleSignIn from '../hooks/useGoogleSignIn';
 
 function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const navigate = useNavigate();
-
+  //const navigate = useNavigate();
   const dispach = useDispatch();
+  const { signInWithGoogle, navigate } = useGoogleSignIn();
 
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // ⛔
+    e.preventDefault();
 
-    const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -61,10 +61,16 @@ function SignUp() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Checkbox discription="Ви являєтесь студентом?" />
+        <button
+          className="bg-blue-400 flex justify-center items-center gap-2 hover:bg-[#8a95ff] px-4 py-3 rounded-md outline-none cursor-pointer w-full border"
+          type="button"
+          onClick={signInWithGoogle}
+        >
+          Увійти через гугл <FcGoogle className="w-5 h-5" />
+        </button>
         <button
           className="hover:bg-[#40414F] px-4 py-3 rounded-md outline-none cursor-pointer w-full border"
-          type="submit" // ✅ submit
+          type="submit"
         >
           Зареєструватись
         </button>
