@@ -6,13 +6,13 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ redirectTo }: ProtectedRouteProps) => {
-  const { isAuth } = useAuth();
+  const { isAuth, loading } = useAuth();
 
-  if (!isAuth) {
-    return <Navigate to={redirectTo} replace />; // Redirect to the specified path if not authenticated
+  if (loading) {
+    return null; // Не рендеримо нічого під час завантаження
   }
 
-  return <Outlet />; // Render the child routes if authenticated
+  return isAuth ? <Outlet /> : <Navigate to={redirectTo} replace />;
 };
 
 export default ProtectedRoute;

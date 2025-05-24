@@ -3,9 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import TextField from '../components/TextField/TextField';
 import Title from '../components/Title/Title';
-import { FcGoogle } from 'react-icons/fc';
 import { setUser } from '../store/slices/userSlice';
-import { useNavigate } from 'react-router';
 import { auth } from '../firebase';
 import useGoogleSignIn from '../hooks/useGoogleSignIn';
 
@@ -14,8 +12,8 @@ function SignUp() {
   const [password, setPassword] = useState<string>('');
 
   //const navigate = useNavigate();
-  const dispach = useDispatch();
-  const { signInWithGoogle, navigate } = useGoogleSignIn();
+  const dispatch = useDispatch();
+  const { navigate } = useGoogleSignIn();
 
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +23,7 @@ function SignUp() {
         const user = userCredential.user;
         const token = await user.getIdToken();
         console.log(user);
-        dispach(
+        dispatch(
           setUser({
             email: user.email,
             id: user.uid,
@@ -61,27 +59,14 @@ function SignUp() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <button
-          className="bg-blue-400 flex justify-center items-center gap-2 hover:bg-[#8a95ff] px-4 py-3 rounded-md outline-none cursor-pointer w-full border"
-          type="button"
-          onClick={signInWithGoogle}
-        >
-          Увійти через гугл <FcGoogle className="w-5 h-5" />
-        </button>
-        <button
-          className="hover:bg-[#40414F] px-4 py-3 rounded-md outline-none cursor-pointer w-full border"
+          className=" mt-3.5 hover:bg-[#40414F] px-4 py-3 rounded-md outline-none cursor-pointer w-full border"
           type="submit"
         >
           Зареєструватись
         </button>
       </form>
-
-      {/*   <div>
-        <p>{name}</p>
-        <p>{secondName}</p>
-        <p>{email}</p>
-        <p>{password}</p>
-      </div> */}
     </div>
   );
 }

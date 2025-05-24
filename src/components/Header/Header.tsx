@@ -1,9 +1,9 @@
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router';
-import { removeUser } from '../../store/slices/userSlice';
+
+import { useSignOut } from '../../hooks/useSignOut';
 
 function Header() {
-  const dispatch = useDispatch();
+  const { signOut } = useSignOut();
 
   const linkStyles =
     'hover:bg-[#40414F]  px-4 py-2 rounded-md outline-none transition cursor-pointer';
@@ -19,18 +19,16 @@ function Header() {
         <NavLink className={linkStyles} to={'/about'}>
           Інструкція
         </NavLink>
+        <NavLink className={linkStyles} to={'/sign-in'}>
+          Увійти
+        </NavLink>
         <NavLink className={linkStyles} to={'/sign-up'}>
           Зареєсруватись
         </NavLink>
-        <NavLink
-          onClick={() => dispatch(removeUser())}
-          className={linkStyles}
-          to={'/sign-in'}
-        >
-          Вхід
+        <NavLink onClick={signOut} className={linkStyles} to={'/sign-in'}>
+          Вийти
         </NavLink>
       </ul>
-      <a className={linkStyles}>Вийти</a>
     </nav>
   );
 }
